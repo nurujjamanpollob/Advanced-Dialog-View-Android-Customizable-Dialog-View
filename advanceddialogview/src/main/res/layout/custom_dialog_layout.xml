@@ -1,0 +1,34 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!--
+  ~ Copyright (c) 2022 Nurujjaman Pollob, All Right Reserved.
+  ~        Licensed under the Apache License, Version 2.0 (the "License");
+  ~        you may not use this file except in compliance with the License.
+  ~        You may obtain a copy of the License at
+  ~
+  ~             http://www.apache.org/licenses/LICENSE-2.0
+  ~
+  ~        Unless required by applicable law or agreed to in writing, software
+  ~        distributed under the License is distributed on an "AS IS" BASIS,
+  ~        WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+  ~        See the License for the specific language governing permissions and
+  ~        limitations under the License.
+  -->
+
+<androidx.coordinatorlayout.widget.CoordinatorLayout
+
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:id="@+id/custom_dialog_layout_root"
+    android:background="@android:color/transparent"
+    app:statusBarBackground="@android:color/transparent"
+    android:layout_height="match_parent">
+
+
+<androidx.coordinatorlayout.widget.CoordinatorLayout
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:background="@android:color/transparent"
+    android:id="@+id/bottom_view_dialog_root_coordinatorelayout" />
+
+</androidx.coordinatorlayout.widget.CoordinatorLayout>
