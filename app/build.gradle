@@ -44,8 +44,8 @@ android {
 
 dependencies {
 
-   // implementation project(':advanceddialogview')
-    implementation 'com.github.nurujjamanpollob:Advanced-Dialog-View-Android-Customizable-Dialog-View:initial'
+    implementation project(':advanceddialogview')
+    //implementation 'com.github.nurujjamanpollob:Advanced-Dialog-View-Android-Customizable-Dialog-View:initial'
     implementation 'androidx.appcompat:appcompat:1.3.0'
     implementation 'com.google.android.material:material:1.4.0'
     implementation 'androidx.constraintlayout:constraintlayout:2.0.4'
