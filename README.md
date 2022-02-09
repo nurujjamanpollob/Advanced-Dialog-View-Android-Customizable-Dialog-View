@@ -1,6 +1,9 @@
 # Advanced Dialog View Android - Customizable Dialog View
 
 <br />
+
+[![](https://jitpack.io/v/nurujjamanpollob/Advanced-Dialog-View-Android-Customizable-Dialog-View.svg)](https://jitpack.io/#nurujjamanpollob/Advanced-Dialog-View-Android-Customizable-Dialog-View)
+
 <br />
 
 This library is simplyfying Dialog Viewing experience inside your application. 
@@ -67,3 +70,33 @@ So as far, it's good if you are looking for customizable Dialog View with full s
 
 <br />
 
+
+Open project level <b>build.gradle</b> file, and add this following content:
+
+<br />
+
+<pre>
+<code> 	allprojects {
+		repositories {
+			...
+			maven { url 'https://jitpack.io' }
+		}
+	}
+  
+ </code>
+ </pre>
+ 
+ 
+ Then, in your app module level <b>build.gradle</b> add this following content in dependencies:
+ 
+ <br />
+ 
+ 
+<pre>
+<code> 	dependencies {
+	        implementation 'com.github.nurujjamanpollob:Advanced-Dialog-View-Android-Customizable-Dialog-View:30b9e2050f'
+	}
+
+  
+ </code>
+ </pre>
