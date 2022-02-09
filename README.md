@@ -76,20 +76,23 @@ Open project level <b>build.gradle</b> file, and add this following content:
 <br />
 
 <pre>
-<code> 	allprojects {
-		repositories {
-			...
-			maven { url 'https://jitpack.io' }
-		}
-	}
+<code> 	
+allprojects {
+    repositories {
+    ...
+    maven { url 'https://jitpack.io' }
+		
+    }
+
+}
   
  </code>
  </pre>
  
  <br />
  
- <b> Note:</b><i> Newer gradle android project prefer settings.gradle repository configuration over project level build.gradle configuration.
-	In that case, you should add following code in your settings.gradle file: </i>
+<b>Note:</b><i>Newer gradle android project prefer settings.gradle repository configuration over project level build.gradle configuration.
+In that case, you should add following code in your settings.gradle file: </i>
 	
 <br />
 <br />
@@ -104,21 +107,24 @@ pluginManagement {
     }
 }
  
+</code>
+</pre>
  
  <br />
  <br />
  
- Then, in your app module level <b>build.gradle</b> add this following content in dependencies:
+Then, in your app module level <b>build.gradle</b> add this following content in dependencies:
  
- <br />
+<br />
  
  
 <pre>
 <code> 	
-	dependencies {
+   dependencies {
 	        
-		implementation 'com.github.nurujjamanpollob:Advanced-Dialog-View-Android-Customizable-Dialog-View:initial'
-	}
+        implementation 'com.github.nurujjamanpollob:Advanced-Dialog-View-Android-Customizable-Dialog-View:initial'
+   
+   }
 
   
  </code>
@@ -129,7 +135,7 @@ pluginManagement {
  <br />
  
  
- So, your project configuration is done.
+So, your project configuration is done.
  
  
 <br />
