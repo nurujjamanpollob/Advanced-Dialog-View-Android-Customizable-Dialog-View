@@ -388,7 +388,7 @@ public class AdvancedDialogView extends AppCompatDialog {
     public void closeDialogView(){
 
 
-        onBackPressed();
+      this.cancel();
 
     }
 
