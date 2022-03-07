@@ -16,6 +16,7 @@
 package com.example.advanceddialogtest.advanceddialogview;
 
 import android.os.Bundle;
+import android.view.View;
 import android.widget.Button;
 import android.widget.TextView;
 
@@ -123,6 +124,12 @@ public class MainActivity extends AppCompatActivity {
 
                 // Set the text
                 dialogTextView.setText(dialogText);
+
+                // Get the Exit Button
+                Button exitButton = dialog.getViewByIdentity(R.id.exit_button, new Button(MainActivity.this));
+
+                // Set exit button click listener
+                exitButton.setOnClickListener(view -> dialog.closeDialogView());
 
 
             }
