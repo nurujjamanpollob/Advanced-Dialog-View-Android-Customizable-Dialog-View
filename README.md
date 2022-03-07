@@ -122,7 +122,7 @@ Then, in your app module level <b>build.gradle</b> add this following content in
 <code> 	
    dependencies {
 	        
-        implementation 'com.github.nurujjamanpollob:Advanced-Dialog-View-Android-Customizable-Dialog-View:initial'
+        implementation 'com.github.nurujjamanpollob:Advanced-Dialog-View-Android-Customizable-Dialog-View:1.1'
    
    }
 
