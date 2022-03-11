@@ -47,43 +47,55 @@ public class MainActivity extends AppCompatActivity {
         Button dialogWithAnimation = findViewById(R.id.dialog_with_anim);
         Button fixedDialog = findViewById(R.id.fixed_dialog);
         Button dialogCancelableOnClickOutside = findViewById(R.id.dialog_cancelable_on_click_outside);
+        Button timeoutDialog = findViewById(R.id.dialog_with_timeout);
 
         bottomDialog.setOnClickListener(view -> drawDialog(R.layout.dialog_layout,
                 DialogOptions.DIALOG_GRAVITY_BOTTOM,
                 "This is bottom Dialog",
                 0,
                 false,
-                false));
+                false, 0));
         centerDialog.setOnClickListener(view -> drawDialog(R.layout.dialog_layout,
                 DialogOptions.DIALOG_GRAVITY_CENTER,
                 "This is Center Dialog",
                 0,
                 false,
-                false));
+                false, 0));
         topDialog.setOnClickListener(view -> drawDialog(R.layout.dialog_layout,
                 DialogOptions.DIALOG_GRAVITY_TOP,
                 "This is Top Dialog",
                 0,
                 false,
-                false));
+                false, 0));
         dialogWithAnimation.setOnClickListener(view -> drawDialog(R.layout.dialog_layout,
                 DialogOptions.DIALOG_GRAVITY_BOTTOM,
                 "This is Dialog with custom Animation",
                 R.anim.popup_flyout_show,
                 false,
-                false));
+                false, 0));
         fixedDialog.setOnClickListener(view -> drawDialog(R.layout.dialog_layout,
                 DialogOptions.DIALOG_GRAVITY_BOTTOM,
                 "This is Fixed Dialog",
                 0,
                 true,
-                false));
+                false, 0));
         dialogCancelableOnClickOutside.setOnClickListener(view -> drawDialog(R.layout.dialog_layout,
                 DialogOptions.DIALOG_GRAVITY_BOTTOM,
                 "This Dialog can be canceled by click surface area",
                 0,
                 false,
-                true));
+                true, 0));
+        timeoutDialog.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                drawDialog(R.layout.dialog_layout,
+                        DialogOptions.DIALOG_GRAVITY_BOTTOM,
+                        "This dialog will be closed after 4 sec",
+                        0,
+                        false,
+                        false, 4000);
+            }
+        });
 
 
 
@@ -97,7 +109,7 @@ public class MainActivity extends AppCompatActivity {
                             String dialogText,
                             @AnimRes int animationId,
                             boolean isFixed,
-                            boolean cancelableOnClickOutside){
+                            boolean cancelableOnClickOutside, int timeoutAfterMillis){
 
 
         dialog = new AdvancedDialogView(this);
@@ -140,6 +152,10 @@ public class MainActivity extends AppCompatActivity {
         if(animationId != 0){
 
             dialog.setUiAnimation(animationId);
+        }
+
+        if(timeoutAfterMillis > 0){
+            dialog.closeDialogUiAfterMillis(timeoutAfterMillis);
         }
 
 

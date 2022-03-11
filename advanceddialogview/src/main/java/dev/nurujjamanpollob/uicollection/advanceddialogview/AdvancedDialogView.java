@@ -27,10 +27,10 @@ import android.view.ViewGroup;
 import android.view.Window;
 import android.view.animation.Animation;
 import android.view.animation.AnimationUtils;
+
 import androidx.annotation.*;
 import androidx.appcompat.app.AppCompatDialog;
 import androidx.coordinatorlayout.widget.CoordinatorLayout;
-
 
 
 /**
@@ -39,19 +39,19 @@ import androidx.coordinatorlayout.widget.CoordinatorLayout;
  * that come with getting NullPointerException for View, that is Being erased from Android System,
  * And you try to listen for its event. which is logical, and impossible to fix without create a new instance
  * of this class and separately Query Views that returns Not-Null.
- *
+ * <p>
  * I fixed this issue, you are allowed to have Views, which may be Null if it's root is being erased,
  * and will give you correct callback, if you rollback to this view again.
- *
+ * <p>
  * Anyway Inflating custom View can be easy, but managing?
  * It may be easy but tricky also.
- *
+ * <p>
  * Also, If you have a class, that needs to show different kind of Dialogs with Views,
  * manage View callback from one place, tired of initiate instance of Dialog again and again, then, it's for you.
- *
+ * <p>
  * So, Anyway I have a deal for you. Just inflate a view with setDialogResourceByLayoutId(id),
  * Which will draw content based on default or your provided layout_gravity option.
- *
+ * <p>
  * So, your layout file will get inflated.
  * So, you might went to listen on View events like setOnClickListener, setOnLongClickListener.
  * Simply, calling findViewById(id) from your activity / fragment instance will give you NullPointerException.
@@ -59,44 +59,41 @@ import androidx.coordinatorlayout.widget.CoordinatorLayout;
  * Just set a listener like:
  * BottomViewDialog.setUILoadListener(new BottomDialogView.OnDialogUiLoadListener() {
  *
- *
- *                 @Override
- *                 public void onUiLoaded() {
- *
- *                 // Try to query your view inside this call
- *
- *
- *                 }
- *        });
- *
- *
+ * @Override public void onUiLoaded() {
+ * <p>
+ * // Try to query your view inside this call
+ * <p>
+ * <p>
+ * }
+ * });
+ * <p>
+ * <p>
  * Okay, this listener ensures that all View is 100% drawn by Android System.
  * So, you will be safely able to query your target View,
  * again findViewById(id) from your activity / fragment instance will give you NullPointerException.
  * Why? because, the View you have passed, it is inflated by the context of BottomDialogView, not by Context of
  * Your activity / fragment.
- *
+ * <p>
  * So, this come with a solution
  * just call getViewByIdentity(viewId, ExpectedViewType) from interface BottomDialogView.OnDialogUiLoadListener{ onUiLoaded(){
- *
- *
+ * <p>
+ * <p>
  * }} method.
- *
- *
+ * <p>
+ * <p>
  * Okay, here is code example:
- *
+ * <p>
  * BottomViewDialog.setUILoadListener(new BottomDialogView.OnDialogUiLoadListener() {
- *  *                 @Override
- *  *                 public void onUiLoaded() {
- *  *
- *  *                 // get signUp Button instance from inflated layout
- *                      Button signUp = BottomViewDialog.getViewByIdentity(R.id.sign_up_button, new Button(Context));
- *  *
- *  *                 }
- *  *        });
- *
- *  Easy. No exception.
- *
+ * *                 @Override
+ * *                 public void onUiLoaded() {
+ * *
+ * *                 // get signUp Button instance from inflated layout
+ * Button signUp = BottomViewDialog.getViewByIdentity(R.id.sign_up_button, new Button(Context));
+ * *
+ * *                 }
+ * *        });
+ * <p>
+ * Easy. No exception.
  */
 
 public class AdvancedDialogView extends AppCompatDialog {
@@ -108,18 +105,19 @@ public class AdvancedDialogView extends AppCompatDialog {
     private OnDialogUiLoadListener uiLoadListener;
     private int layoutId = 0;
     private DialogOptions dialogOptions;
-    private boolean dialogCancelable = true;
+    private boolean isCancelable = true;
 
 
-
-
+    /**
+     * Constructor parameter of AdvancedDialogView, this constructor expected to be created by class instance
+     *
+     * @param context activity context, which under the dialog view will be created.
+     */
     public AdvancedDialogView(@NonNull Context context) {
         super(context);
 
         this.context = context;
     }
-
-
 
 
     {
@@ -133,8 +131,9 @@ public class AdvancedDialogView extends AppCompatDialog {
      * This method should be called from MainThread, if you call it from Other than MainThread, you will get a Exception.
      * it either @link CalledFromWrongThreadException or either leaking View.
      * If you are getting exception, please pass drawInFixedMode true and update Constructor parameter with a Looper.getMainLooper() instance
-     * @param dialogLayoutID layout ID of dialog view that needs to be drawn on screen.
-     * @param dialogGravityOptions Enum to set UI gravity option
+     *
+     * @param dialogLayoutID          layout ID of dialog view that needs to be drawn on screen.
+     * @param dialogGravityOptions    Enum to set UI gravity option
      * @param drawInFixedModeIfNeeded A boolean to determine If the Dialog Ui should be draw in the fixed mode.
      *                                It's value simply ignored if there is no Exception.
      */
@@ -148,7 +147,7 @@ public class AdvancedDialogView extends AppCompatDialog {
 
         try {
             drawDialogUI(dialogLayoutID, false, dialogOptions);
-        }catch (Exception ignored) {
+        } catch (Exception ignored) {
 
             if (drawInFixedModeIfNeeded) {
                 new Handler(Looper.getMainLooper()).post(() -> drawDialogUI(dialogLayoutID, false, dialogOptions));
@@ -157,11 +156,11 @@ public class AdvancedDialogView extends AppCompatDialog {
         }
 
 
-
     }
 
     /**
      * Method to set cancel Dialog On Click Outside of Dialog View
+     *
      * @param isCancelOnClickOutside a Boolean to set If the dialog should be closed if clicked outside of root View
      */
 
@@ -187,10 +186,11 @@ public class AdvancedDialogView extends AppCompatDialog {
 
     /**
      * Method to get status of If Dialog View is showing
+     *
      * @return true if Dialog View visible on the Screen, False Otherwise.
      */
 
-    public Boolean isDialogShowing(){
+    public Boolean isDialogShowing() {
 
         return isShowing;
     }
@@ -198,21 +198,23 @@ public class AdvancedDialogView extends AppCompatDialog {
 
     /**
      * This method ensures a View object that is being need to get.
-     * @param id int to get a View by it's unique identifier.
+     *
+     * @param id           int to get a View by it's unique identifier.
      * @param viewExpected the kind of View, you expect to get, the passed Object will be returned,
      *                     If the requested View get by unique identifier is not found.
-     * @param <T> The kind of View instance, you are looking for.
+     * @param <T>          The kind of View instance, you are looking for.
      * @return either a resolved Not-Null View, or the View object from <T> viewExpected.
      * @throws ClassCastException if the View instance by unique identity number is null,
-     * and your expectation <T> viewExpected, or initiation of <T extends View> is wrong.
+     *                            and your expectation <T> viewExpected, or initiation of <T extends View> is wrong.
      */
     @NonNull
-    public <T extends View> T getViewByIdentity(@IdRes int id, T viewExpected){
+    public <T extends View> T getViewByIdentity(@IdRes int id, T viewExpected) {
 
         T view = null;
-        try{
+        try {
             view = rootView.findViewById(id);
-        }catch (Exception ignored){}
+        } catch (Exception ignored) {
+        }
 
         return view != null ? view : viewExpected;
 
@@ -221,27 +223,52 @@ public class AdvancedDialogView extends AppCompatDialog {
     /**
      * Interface for Callback for Dialog UI Listener
      */
-    public interface OnDialogUiLoadListener{
+    public interface OnDialogUiLoadListener {
 
         /**
          * This method will be invoked when the passed Layout File has been loaded
          */
-        default void onUiLoaded(){}
+        default void onUiLoaded() {
+        }
 
         /**
          * When the Dialog UI got inflated, this method will be invoke with Dialog Root View instance.
          * So, you can further customize the Dialog UI if needed
+         *
          * @param view the instance of Dialog Layout Placeholder.
          */
-        default void rootUI(CoordinatorLayout view){}
+        default void rootUI(CoordinatorLayout view) {
+        }
 
         /**
          * This method will be invoked, when you passed a animation resource to animate Dialog UI,
          * And the animation got finished Loading.
-         * @param animation the Animation has been finished.
+         *
+         * @param animation   the Animation has been finished.
          * @param animationId the Identity number of Animation resource, you passed to.
          */
-        default void onAnimationFinished(Animation animation, int animationId){}
+        default void onAnimationFinished(Animation animation, int animationId) {
+        }
+
+        /**
+         * This method will be invoked, if you override this method in listener interface,
+         * and your passed animation instance is being started creating by Android System
+         *
+         * @param animation   a instance of Animation class, that created by AdvancedDialogView class, that is about to start
+         * @param animationId your passed animation resource ID
+         */
+        default void onAnimationStart(Animation animation, int animationId) {
+        }
+
+        /**
+         * This method will be invoked, if you override this method in listener interface,
+         * and your passed animation instance is already finished and it's going to be repeat again.
+         *
+         * @param animation   a instance of Animation class, that created by AdvancedDialogView class, that is about to start
+         * @param animationId your passed animation resource ID
+         */
+        default void onAnimationRepeat(Animation animation, int animationId) {
+        }
 
 
     }
@@ -249,9 +276,10 @@ public class AdvancedDialogView extends AppCompatDialog {
 
     /**
      * Method to set listener on various Dialog Ui Load event.
+     *
      * @param uiLoadListener a new Instance of @link OnDialogUiLoadListener to receive callback.
      */
-    public void setUILoadListener(OnDialogUiLoadListener uiLoadListener){
+    public void setUILoadListener(OnDialogUiLoadListener uiLoadListener) {
 
         this.uiLoadListener = uiLoadListener;
 
@@ -263,9 +291,10 @@ public class AdvancedDialogView extends AppCompatDialog {
 
     /**
      * Method to draw whole dialog UI
-     * @param id layout resource ID
-     * @param skipExisting during inflate new View, If a existing Dialog UI is showing,
-     *                     This parameter sets a flag to re-render new view or keep existing one.
+     *
+     * @param id            layout resource ID
+     * @param skipExisting  during inflate new View, If a existing Dialog UI is showing,
+     *                      This parameter sets a flag to re-render new view or keep existing one.
      * @param dialogOptions the Dialog DRAW option. currently, it supports views draw from BOTTOM, CENTER, TOP
      */
     @MainThread
@@ -285,12 +314,12 @@ public class AdvancedDialogView extends AppCompatDialog {
 
 
             //If Dialog Ui gravity mode is defined
-            if(dialogOptions != null) {
+            if (dialogOptions != null) {
 
                 setDialogUiDirectionMode(cl, dialogOptions);
 
 
-            }else {
+            } else {
 
 
                 // Use default Ui gravity = bottom
@@ -328,10 +357,11 @@ public class AdvancedDialogView extends AppCompatDialog {
 
     /**
      * Internal method to set Layout gravity Mode
-     * @param cl instance of Root placeholder for Dialog View
+     *
+     * @param cl            instance of Root placeholder for Dialog View
      * @param dialogOptions Enum to determine the UI gravity mode to set.
      */
-    private void setDialogUiDirectionMode(CoordinatorLayout cl, DialogOptions dialogOptions){
+    private void setDialogUiDirectionMode(CoordinatorLayout cl, DialogOptions dialogOptions) {
 
         CoordinatorLayout.LayoutParams coOrdinatorParam = new CoordinatorLayout.LayoutParams(CoordinatorLayout.LayoutParams.MATCH_PARENT, CoordinatorLayout.LayoutParams.WRAP_CONTENT);
 
@@ -345,12 +375,13 @@ public class AdvancedDialogView extends AppCompatDialog {
 
     /**
      * Method to set UI animation when Creating new Dialog View
+     *
      * @param animationResId animation resource ID to set UI animation.
      */
 
-    public void setUiAnimation(@AnimRes int animationResId){
+    public void setUiAnimation(@AnimRes int animationResId) {
 
-        if(rootView != null){
+        if (rootView != null) {
 
             Animation dialogAnimation = AnimationUtils.loadAnimation(context, animationResId);
 
@@ -361,12 +392,16 @@ public class AdvancedDialogView extends AppCompatDialog {
                 @Override
                 public void onAnimationStart(Animation animation) {
 
+                    if (uiLoadListener != null) {
+                        uiLoadListener.onAnimationStart(animation, animationResId);
+                    }
+
                 }
 
                 @Override
                 public void onAnimationEnd(Animation animation) {
 
-                    if(uiLoadListener != null){
+                    if (uiLoadListener != null) {
                         uiLoadListener.onAnimationFinished(animation, animationResId);
                     }
 
@@ -375,6 +410,9 @@ public class AdvancedDialogView extends AppCompatDialog {
                 @Override
                 public void onAnimationRepeat(Animation animation) {
 
+                    if (uiLoadListener != null) {
+                        uiLoadListener.onAnimationRepeat(animation, animationResId);
+                    }
                 }
             });
         }
@@ -383,33 +421,54 @@ public class AdvancedDialogView extends AppCompatDialog {
 
 
     /**
-     * Method to clear Dialog Interface
+     * Method to clear dialog interface, not work for fixed dialog
      */
-    public void closeDialogView(){
+    public void closeDialogView() {
 
-
-      this.cancel();
+        this.cancel();
 
     }
 
 
     /**
-     * Method to set Dialog ui can be cane be cancelled or Not
+     * Method to set if the dialog ui can be can be cancellable or Not
      */
     @Override
     public void setCancelable(boolean flag) {
-       this.dialogCancelable = flag;
-
+        isCancelable = flag;
         super.setCancelable(flag);
     }
 
+    /**
+     * Method to close dialog UI automatically after x milliseconds
+     *
+     * @param millis close created dialog after milliseconds
+     */
+    public void closeDialogUiAfterMillis(int millis) {
+
+        new Handler(Looper.getMainLooper()).postDelayed(this::closeDialogView, millis);
+    }
+
+    /**
+     * This method will help close this dialog view, if the call with closeDialogView() or super.cancel() call is unsuccessful
+     * Now, it's used to close cancelable dialog view by press back button.
+     */
     @Override
     public void onBackPressed() {
 
-        if(!dialogCancelable) {
-            setCancelable(true);
+        if (!isCancelable) {
+            closeDialogView();
             super.onBackPressed();
         }
+    }
 
+    /**
+     * Method to cancel the dialog UI
+     */
+    @Override
+    public void cancel() {
+        if (!isCancelable) {
+            super.cancel();
+        }
     }
 }

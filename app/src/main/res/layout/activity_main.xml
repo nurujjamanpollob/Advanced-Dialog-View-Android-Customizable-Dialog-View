@@ -69,6 +69,12 @@
             android:layout_height="wrap_content"
             android:text="@string/dialog_with_closed_on_click_outside" />
 
+        <Button
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:id="@+id/dialog_with_timeout"
+            android:text="@string/dialog_with_timeout" />
+
     </LinearLayout>
 
 </androidx.constraintlayout.widget.ConstraintLayout>
