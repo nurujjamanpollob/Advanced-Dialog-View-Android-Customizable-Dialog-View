@@ -122,7 +122,7 @@ Then, in your app module level <b>build.gradle</b> add this following content in
 <code> 	
    dependencies {
 	        
-        implementation 'com.github.nurujjamanpollob:Advanced-Dialog-View-Android-Customizable-Dialog-View:1.2'
+        implementation 'com.github.nurujjamanpollob:Advanced-Dialog-View-Android-Customizable-Dialog-View:1.3'
    
    }
 
@@ -265,9 +265,18 @@ dialogView..setUILoadListener(new AdvancedDialogView.OnDialogUiLoadListener() {
 <code> dialogView.closeDialogView();</code>
 </pre>
 <br />
+<br />
 
-<b>Anyway, you are encourage to see sample app module inside this project to better understand how you should implement this library. <br />
-Click here to see this sample file: <a href="https://github.com/nurujjamanpollob/Advanced-Dialog-View-Android-Customizable-Dialog-View/blob/master/app/src/main/java/com/example/advanceddialogtest/advanceddialogview/MainActivity.java">MainActivity.Java</a>
+## How to use dialog timeout?
+<br />
+<pre>
+<code>
+dialogView.closeDialogUiAfterMillis(int timeoutAfterMillis);
+</code>
+</pre>
+
+<br />
+<b>For implementation guide, please see this sample Android activity file from here: <a href="https://github.com/nurujjamanpollob/Advanced-Dialog-View-Android-Customizable-Dialog-View/blob/master/app/src/main/java/com/example/advanceddialogtest/advanceddialogview/MainActivity.java">MainActivity.Java</a>
 <br />
 
 <h2> Demo </h2>
